@@ -9,17 +9,26 @@ export type Product = {
   description: string;
   category: string;
   image: string;
+  _id: string;
 };
 export type productContextType = {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
   categories: string[];
+  pickCategory: string;
+  setPickCategory: React.Dispatch<React.SetStateAction<string>>;
+  productsLoading: boolean;
+  setProductsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const productContextDefaultValue: productContextType = {
   products: [],
   setProducts: () => {},
   categories: [],
+  pickCategory: "",
+  setPickCategory: () => {},
+  productsLoading: false,
+  setProductsLoading: () => {},
 };
 
 export const ProductContext = createContext<productContextType>(
@@ -31,16 +40,20 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [products, setProducts] = useState<Product[]>();
 
+  const [productsLoading, setProductsLoading] = useState<boolean>(false);
+
   useEffect(() => {
     const getData = async () => {
       await fetch(`${siteURL}/api/products`)
         .then((res) => res.json())
-        .then((data) => setProducts(data.data));
+        .then((data) => {
+          setProducts(data.data);
+          setProductsLoading(true);
+        });
     };
     getData();
   }, []);
 
-  console.log(products);
   const categoryCount = products?.map((item: Product) => {
     return item.category;
   });
@@ -48,7 +61,17 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     return categoryCount.indexOf(item) == pos;
   });
 
-  const values: any = { products, setProducts, categories };
+  const [pickCategory, setPickCategory] = useState<string | null>("");
+
+  const values: any = {
+    products,
+    setProducts,
+    categories,
+    pickCategory,
+    setPickCategory,
+    productsLoading,
+    setProductsLoading,
+  };
 
   return (
     <ProductContext.Provider value={values}>{children}</ProductContext.Provider>

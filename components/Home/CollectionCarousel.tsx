@@ -14,6 +14,8 @@ import {
   productContextType,
 } from "../ProductsContext/ProductsContext";
 import Image from "next/image";
+import Link from "next/link";
+import { siteURL } from "@/URL";
 
 export function CarouselSpacing() {
   const { products } = React.useContext<productContextType>(ProductContext);
@@ -21,7 +23,7 @@ export function CarouselSpacing() {
   return (
     <Carousel className="w-full 750max:hidden">
       <CarouselContent className="-ml-1">
-        {products?.map((item, index) => {
+        {products?.map((item: any, index: any) => {
           if (index + 2 < products.length) {
             return (
               <CarouselItem
@@ -31,13 +33,16 @@ export function CarouselSpacing() {
                 <div className="p-1 flex flex-wrap">
                   {typeof products[index] !== "undefined" && (
                     <CarouselItem className="basis-1/3 flex flex-col text-start">
-                      <div className="flex mb-3 justify-center items-center">
+                      <Link
+                        href={`${siteURL}/product/${products[index]._id}`}
+                        className="flex mb-3 justify-center items-center"
+                      >
                         <img
                           className="w-52 h-52 "
                           src={products[index]?.image}
                           alt={products[index]?.title}
                         />
-                      </div>
+                      </Link>
                       <span className="font-extrabold">
                         {products[index]?.title.slice(0, 40)}...
                       </span>
@@ -49,13 +54,16 @@ export function CarouselSpacing() {
                   )}
                   {typeof products[index] !== "undefined" && (
                     <CarouselItem className="basis-1/3 flex flex-col text-start">
-                      <div className="flex mb-3 justify-center items-center">
+                      <Link
+                        href={`${siteURL}/product/${products[index + 1]._id}`}
+                        className="flex mb-3 justify-center items-center"
+                      >
                         <img
-                          className="w-52 h-52  "
+                          className="w-52 h-52 "
                           src={products[index + 1]?.image}
                           alt={products[index + 1]?.title}
                         />
-                      </div>
+                      </Link>
                       <span className="font-extrabold">
                         {products[index + 1]?.title.slice(0, 40)}...
                       </span>
@@ -67,13 +75,16 @@ export function CarouselSpacing() {
                   )}
                   {typeof products[index] !== "undefined" && (
                     <CarouselItem className="basis-1/3 flex flex-col text-start">
-                      <div className="flex mb-3 justify-center items-center">
+                      <Link
+                        href={`${siteURL}/product/${products[index + 2]._id}`}
+                        className="flex mb-3 justify-center items-center"
+                      >
                         <img
                           className="w-52 h-52 "
                           src={products[index + 2]?.image}
                           alt={products[index + 2]?.title}
                         />
-                      </div>
+                      </Link>
                       <span className="font-extrabold">
                         {products[index + 2]?.title.slice(0, 40)}...
                       </span>
