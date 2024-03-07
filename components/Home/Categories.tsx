@@ -15,11 +15,11 @@ export default function Categories() {
     <div>
       <div className="flex justify-between items-center pb-10 pt-12 550max:flex-col 550max:gap-3">
         <h1 className="text-2xl 550max:text-xl">Shop by Categories</h1>
-        <Link href="/shop" className="font-extralight">
+        <Link href="/shop" className="font-normal">
           Show All
         </Link>
       </div>
-      <div className="flex gap-10 flex-wrap justify-between">
+      <div className="flex gap-10 flex-wrap justify-between 1000max:justify-center 1000max:items-center">
         {categories?.map((item: any, i) => {
           return <Category key={i} id={i} item={item} />;
         })}
