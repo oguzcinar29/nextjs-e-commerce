@@ -32,9 +32,12 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   const [products, setProducts] = useState<Product[]>();
 
   useEffect(() => {
-    fetch(`${siteURL}/api/products`)
-      .then((res) => res.json())
-      .then((data) => setProducts(data.data));
+    const getData = async () => {
+      await fetch(`${siteURL}/api/products`)
+        .then((res) => res.json())
+        .then((data) => setProducts(data.data));
+    };
+    getData();
   }, []);
 
   console.log(products);
