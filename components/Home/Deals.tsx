@@ -11,7 +11,7 @@ export default function Deals() {
           Get ready for a shopping experience like never before with our Deals
           of the Month! Every purchase comes with exclusive perks and offers,
           making this month a celebration of savvy choices and amazing deals.
-          Don'mis out
+          Dont mis out.
         </p>
         <div className="flex gap-7 flex-wrap 1000max:justify-center 1000max:items-center">
           <div className="border border-gray-200 rounded-sm p-6">
