@@ -1,8 +1,16 @@
+"use client";
 import { ArrowRight, Gift, ShoppingCart } from "lucide-react";
 import dealsImg from "@/public/assets/images/image-4.svg";
 import Link from "next/link";
+import { useContext } from "react";
+import {
+  ProductContext,
+  productContextType,
+} from "../ProductsContext/ProductsContext";
 
 export default function Deals() {
+  const { pickCategory, setPickCategory } =
+    useContext<productContextType>(ProductContext);
   return (
     <div className="flex justify-between  gap-28 items-center pt-10 pb-10">
       <div className="w-3/5 flex flex-col gap-10 1000max:w-full 1000max:justify-center 1000max:items-center">
@@ -41,6 +49,7 @@ export default function Deals() {
         <Link
           className="flex gap-2 items-center bg-black w-40 p-1 pt-4 pb-4 rounded-lg text-white justify-center"
           href="/shop"
+          onClick={() => setPickCategory("all")}
         >
           View Products{" "}
           <span>

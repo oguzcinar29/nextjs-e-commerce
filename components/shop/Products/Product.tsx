@@ -1,16 +1,23 @@
 import { siteURL } from "@/URL";
+import {
+  ProductContext,
+  productContextType,
+} from "@/components/ProductsContext/ProductsContext";
 import Link from "next/link";
-import React from "react";
+import React, { useContext } from "react";
 
 export default function Product(props: {
   id: string;
   price: number;
   title: string;
   description: string;
+  category: string;
   image: string;
 }) {
+  const { setPickCategory } = useContext<productContextType>(ProductContext);
   return (
     <Link
+      onClick={() => setPickCategory(props.category)}
       href={`${siteURL}/product/${props.id}`}
       className=" flex flex-col gap-3 border border-gray-200 p-5 "
     >

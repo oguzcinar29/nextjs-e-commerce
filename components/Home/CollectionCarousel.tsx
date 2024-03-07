@@ -18,7 +18,8 @@ import Link from "next/link";
 import { siteURL } from "@/URL";
 
 export function CarouselSpacing() {
-  const { products } = React.useContext<productContextType>(ProductContext);
+  const { products, setPickCategory } =
+    React.useContext<productContextType>(ProductContext);
 
   return (
     <Carousel className="w-full 750max:hidden">
@@ -34,6 +35,9 @@ export function CarouselSpacing() {
                   {typeof products[index] !== "undefined" && (
                     <CarouselItem className="basis-1/3 flex flex-col text-start">
                       <Link
+                        onClick={() =>
+                          setPickCategory(products[index].category)
+                        }
                         href={`${siteURL}/product/${products[index]._id}`}
                         className="flex mb-3 justify-center items-center"
                       >

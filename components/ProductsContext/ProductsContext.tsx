@@ -14,6 +14,8 @@ export type Product = {
 export type productContextType = {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
+  card: Product[];
+  setCard: React.Dispatch<React.SetStateAction<Product[]>>;
   categories: string[];
   pickCategory: string;
   setPickCategory: React.Dispatch<React.SetStateAction<string>>;
@@ -24,6 +26,8 @@ export type productContextType = {
 export const productContextDefaultValue: productContextType = {
   products: [],
   setProducts: () => {},
+  card: [],
+  setCard: () => {},
   categories: [],
   pickCategory: "",
   setPickCategory: () => {},
@@ -61,7 +65,9 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     return categoryCount.indexOf(item) == pos;
   });
 
-  const [pickCategory, setPickCategory] = useState<string | null>("");
+  const [pickCategory, setPickCategory] = useState<string | null>("all");
+
+  const [card, setCard] = useState<string[] | null>([]);
 
   const values: any = {
     products,
@@ -71,7 +77,11 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     setPickCategory,
     productsLoading,
     setProductsLoading,
+    card,
+    setCard,
   };
+
+  console.log(card);
 
   return (
     <ProductContext.Provider value={values}>{children}</ProductContext.Provider>

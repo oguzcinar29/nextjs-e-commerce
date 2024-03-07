@@ -19,6 +19,7 @@ export default function Products() {
             if (item.category === pickCategory) {
               return (
                 <Product
+                  category={item.category}
                   title={item.title}
                   description={item.description}
                   price={item.price}
@@ -31,6 +32,7 @@ export default function Products() {
             if (pickCategory === "" || pickCategory === "all") {
               return (
                 <Product
+                  category={item.category}
                   title={item.title}
                   description={item.description}
                   price={item.price}
