@@ -14,6 +14,27 @@ export default function SingleProduct({ params }: any) {
   const findProduct = products?.find((item: any) => item._id === id);
   const category: string | undefined = findProduct?.category ?? "";
 
+  function handleClick() {
+    const newObj = {
+      ...findProduct,
+      count: 1,
+    };
+    const existProducts = JSON.parse(
+      window.localStorage.getItem("products") || "[]"
+    );
+    if (existProducts === null) {
+      localStorage.setItem("products", JSON.stringify([newObj]));
+    } else {
+      var oldItems = JSON.parse(
+        (typeof window !== "undefined" &&
+          window.localStorage.getItem("products")) ||
+          "[]"
+      );
+      oldItems.push(newObj);
+      localStorage.setItem("products", JSON.stringify(oldItems));
+    }
+  }
+
   return (
     <div className="pt-20 pb-10 flex flex-col gap-32">
       <div className="flex gap-5 1000max:flex-col 1000max:justify-center 1000max:items-center">
@@ -41,26 +62,7 @@ export default function SingleProduct({ params }: any) {
           </div>
 
           <button
-            onClick={() => {
-              const newObj = {
-                ...findProduct,
-                count: 1,
-              };
-
-              //i was about to set my session storage if there is a same item that user want to add card increase count up gl!
-
-              // const arr:string[] | null = window.sessionStorage.getItem("products");
-              // console.log(typeof arr);
-
-              window.localStorage.setItem(
-                "products",
-
-                JSON.stringify([...card, newObj])
-              );
-              setCard((prevVal: any) => {
-                return [...prevVal, newObj];
-              });
-            }}
+            onClick={handleClick}
             className="bg-black text-white pt-3 pb-3 rounded-lg"
           >
             Add to cart

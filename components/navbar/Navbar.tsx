@@ -11,15 +11,15 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, ShoppingCart } from "lucide-react";
 import MobileLinks from "./MobileLinks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
-  const item = JSON.parse(
-    (typeof window !== "undefined" &&
-      window.localStorage.getItem("products")) ||
-      "[]"
+  const [item, setItem] = useState(
+    typeof window !== "undefined" &&
+      JSON.parse(window.localStorage.getItem("products") || "[]")
   );
-  console.log(item);
+
+  console.log(typeof item);
 
   return (
     <nav>
@@ -55,9 +55,11 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent className="w-1/3 1000max:w-96">
               <SheetHeader>
-                {item?.map((item: any, i: any) => {
-                  return <p key={i}>{item.title}</p>;
-                })}
+                {item &&
+                  !!item.length &&
+                  item?.map((item: any, indx: any) => {
+                    return <p key={indx}>{item.title}</p>;
+                  })}
               </SheetHeader>
             </SheetContent>
           </Sheet>
