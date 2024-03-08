@@ -10,12 +10,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu, ShoppingCart } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import {
+  ProductContext,
+  productContextType,
+} from "../ProductsContext/ProductsContext";
 export default function MobileLinks() {
-  const [item, setItem] = useState(
-    typeof window !== "undefined" &&
-      JSON.parse(window.localStorage.getItem("products") || "[]")
-  );
+  const { card } = useContext<productContextType>(ProductContext);
 
   return (
     <Sheet>
@@ -37,9 +38,9 @@ export default function MobileLinks() {
               </SheetTrigger>
               <SheetContent className="w-1/3 1000max:w-90">
                 <SheetHeader>
-                  {item &&
-                    !!item.length &&
-                    item?.map((item: any, indx: any) => {
+                  {card &&
+                    !!card.length &&
+                    card?.map((item: any, indx: any) => {
                       return <p key={indx}>{item.title}</p>;
                     })}
                 </SheetHeader>

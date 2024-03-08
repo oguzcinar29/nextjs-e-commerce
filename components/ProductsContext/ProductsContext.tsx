@@ -11,6 +11,15 @@ export type Product = {
   image: string;
   _id: string;
 };
+export type Card = {
+  count: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  _id: string;
+};
 export type productContextType = {
   products: Product[];
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
@@ -67,7 +76,13 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const [pickCategory, setPickCategory] = useState<string | null>("all");
 
-  const [card, setCard] = useState<string[] | null>([]);
+  const [card, setCard] = useState<Card[]>(
+    JSON.parse(
+      (typeof window !== "undefined" &&
+        window.localStorage.getItem("products")) ||
+        "[]"
+    ) || null
+  );
 
   const values: any = {
     products,

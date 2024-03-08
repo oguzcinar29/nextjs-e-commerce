@@ -11,15 +11,14 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, ShoppingCart } from "lucide-react";
 import MobileLinks from "./MobileLinks";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import {
+  ProductContext,
+  productContextType,
+} from "../ProductsContext/ProductsContext";
 
 export default function Navbar() {
-  const [item, setItem] = useState(
-    typeof window !== "undefined" &&
-      JSON.parse(window.localStorage.getItem("products") || "[]")
-  );
-
-  console.log(typeof item);
+  const { card } = useContext<productContextType>(ProductContext);
 
   return (
     <nav>
@@ -55,9 +54,9 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent className="w-1/3 1000max:w-96">
               <SheetHeader>
-                {item &&
-                  !!item.length &&
-                  item?.map((item: any, indx: any) => {
+                {card &&
+                  !!card.length &&
+                  card?.map((item: any, indx: any) => {
                     return <p key={indx}>{item.title}</p>;
                   })}
               </SheetHeader>

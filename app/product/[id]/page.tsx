@@ -24,14 +24,35 @@ export default function SingleProduct({ params }: any) {
     );
     if (existProducts === null) {
       localStorage.setItem("products", JSON.stringify([newObj]));
+      setCard(newObj as any);
     } else {
       var oldItems = JSON.parse(
         (typeof window !== "undefined" &&
           window.localStorage.getItem("products")) ||
           "[]"
       );
-      oldItems.push(newObj);
-      localStorage.setItem("products", JSON.stringify(oldItems));
+      var findItem = oldItems.find(
+        (item: any) => item._id === findProduct?._id
+      );
+
+      if (findItem) {
+        console.log("find item");
+
+        const newObj2 = {
+          ...findItem,
+          count: findItem.count + 1,
+        };
+        const findIndex = oldItems.findIndex(
+          (item: any) => item._id === findItem._id
+        );
+        console.log(findIndex);
+        oldItems[findIndex].count += 1;
+        localStorage.setItem("products", JSON.stringify(oldItems));
+      } else {
+        oldItems.push(newObj);
+        localStorage.setItem("products", JSON.stringify(oldItems));
+      }
+      setCard(oldItems as any);
     }
   }
 
