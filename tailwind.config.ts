@@ -12,6 +12,7 @@ const config = {
   theme: {
     screens: {
       "650max": { raw: "(max-width:650px)" },
+      "400max": { raw: "(max-width:400px)" },
       "550max": { raw: "(max-width:550px)" },
       "750max": { raw: "(max-width:750px)" },
       "750in": { raw: "(min-width:750px)" },
@@ -19,7 +20,11 @@ const config = {
       "1000max": { raw: "(max-width:1000px)" },
     },
     height: {
-      "90": "90%",
+      "90": "30%",
+      auth: "800px",
+    },
+    width: {
+      auth: "608px",
     },
     container: {
       center: true,

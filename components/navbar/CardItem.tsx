@@ -63,18 +63,24 @@ export default function CardItem(props: Card) {
         <div className="flex flex-col justify-between gap-5 ">
           <span>{props.title}</span>
           <div className="flex gap-2 items-center">
-            <Button size={"icon"} onClick={() => decreaseCount(props._id)}>
+            <Button
+              variant={"secondary"}
+              onClick={() => decreaseCount(props._id)}
+            >
               <Minus />
             </Button>
             <span>{props.count}</span>
-            <Button size={"icon"} onClick={() => increaseCount(props._id)}>
+            <Button
+              variant={"secondary"}
+              onClick={() => increaseCount(props._id)}
+            >
               <Plus />
             </Button>
           </div>
         </div>
       </div>
       <div className="flex items-center justify-between flex-col">
-        <b>${props.price}</b>
+        <b>${props.price * props.count}</b>
         <button onClick={() => deleteItem(props._id)} className="text-red-500">
           <Trash />
         </button>

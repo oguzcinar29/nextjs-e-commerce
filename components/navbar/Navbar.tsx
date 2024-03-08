@@ -22,7 +22,13 @@ import { Button } from "../ui/button";
 export default function Navbar() {
   const { card } = useContext<productContextType>(ProductContext);
 
-  console.log(card.length);
+  const getTotal = () => {
+    let total = 0;
+    card.forEach((item: any) => {
+      total += item.count * item.price;
+    });
+    return total;
+  };
 
   return (
     <nav>
@@ -58,20 +64,34 @@ export default function Navbar() {
               <span>({card.length})</span>
             </SheetTrigger>
             <SheetContent className="w-1/3 1000max:w-96 flex flex-col gap-5">
-              <SheetHeader className="text-2xl">
-                <b>Orders</b>
-              </SheetHeader>
-              <div className="flex flex-col gap-5 sticky overflow-y-scroll h-90 ">
-                {card &&
-                  !!card.length &&
-                  card?.map((item: any, indx: any) => {
-                    return <CardItem {...item} key={indx} />;
-                  })}
-              </div>
-              <Button className="w-full">Order Now</Button>
-            </SheetContent>
+              {card.length !== 0 && (
+                <div className="flex flex-col min-h-full justify-between gap-5">
+                  <SheetHeader className="text-2xl">
+                    <b>Orders</b>
+                  </SheetHeader>
+                  <div className="flex flex-col gap-5 sticky overflow-y-scroll h-90 ">
+                    {card &&
+                      !!card.length &&
+                      card?.map((item: any, indx: any) => {
+                        return <CardItem {...item} key={indx} />;
+                      })}
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="flex items-center gap-1 text-xl ">
+                      Sub Total:{" "}
+                      <b className="text-2xl">${getTotal().toFixed(2)}</b>
+                    </span>
+                    <Button className="w-32">Order Now</Button>
+                  </div>
+                </div>
+              )}
+              {card.length === 0 && (
+                <div className="flex justify-center items-center mt-72">
+                  <b className="text-3xl">Your cart is empty</b>
+                </div>
+              )}
+            </SheetContent>{" "}
           </Sheet>
-
           <Link
             className="bg-black text-white rounded-lg  p-3 pl-5 pr-5"
             href="/login"
