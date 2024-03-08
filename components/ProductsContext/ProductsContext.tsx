@@ -81,8 +81,6 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     setCard,
   };
 
-  console.log(card);
-
   return (
     <ProductContext.Provider value={values}>{children}</ProductContext.Provider>
   );

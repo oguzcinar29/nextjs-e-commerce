@@ -52,7 +52,7 @@ export default function SingleProduct({ params }: any) {
               // const arr:string[] | null = window.sessionStorage.getItem("products");
               // console.log(typeof arr);
 
-              window.sessionStorage.setItem(
+              window.localStorage.setItem(
                 "products",
 
                 JSON.stringify([...card, newObj])

@@ -1,3 +1,4 @@
+"use client";
 import ef from "@/public/logo-black.svg";
 import Link from "next/link";
 import {
@@ -9,7 +10,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Menu, ShoppingCart } from "lucide-react";
+import { useState } from "react";
 export default function MobileLinks() {
+  const item = JSON.parse(
+    (typeof window !== "undefined" &&
+      window.localStorage.getItem("products")) ||
+      "[]"
+  );
+
   return (
     <Sheet>
       <SheetTrigger className="650min:hidden">
@@ -30,11 +38,9 @@ export default function MobileLinks() {
               </SheetTrigger>
               <SheetContent className="w-1/3 1000max:w-90">
                 <SheetHeader>
-                  <SheetTitle>Are you absolutely sure?</SheetTitle>
-                  <SheetDescription>
-                    This action cannot be undone. This will permanently delete
-                    your account and remove your data from our servers.
-                  </SheetDescription>
+                  {item?.map((item: any, i: any) => {
+                    return <p key={i}>{item.title}</p>;
+                  })}
                 </SheetHeader>
               </SheetContent>
             </Sheet>

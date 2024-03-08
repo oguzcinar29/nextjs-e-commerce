@@ -1,3 +1,4 @@
+"use client";
 import ef from "@/public/logo-black.svg";
 import Link from "next/link";
 import {
@@ -10,8 +11,16 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, ShoppingCart } from "lucide-react";
 import MobileLinks from "./MobileLinks";
+import { useState } from "react";
 
 export default function Navbar() {
+  const item = JSON.parse(
+    (typeof window !== "undefined" &&
+      window.localStorage.getItem("products")) ||
+      "[]"
+  );
+  console.log(item);
+
   return (
     <nav>
       <div className="flex justify-between pt-5 pb-5 items-center">
@@ -46,11 +55,9 @@ export default function Navbar() {
             </SheetTrigger>
             <SheetContent className="w-1/3 1000max:w-96">
               <SheetHeader>
-                <SheetTitle>Are you absolutely sure?</SheetTitle>
-                <SheetDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </SheetDescription>
+                {item?.map((item: any, i: any) => {
+                  return <p key={i}>{item.title}</p>;
+                })}
               </SheetHeader>
             </SheetContent>
           </Sheet>

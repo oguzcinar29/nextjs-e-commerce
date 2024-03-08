@@ -9,7 +9,6 @@ import Link from "next/link";
 
 export default function Categories() {
   const { categories } = useContext<productContextType>(ProductContext);
-  console.log(categories);
 
   return (
     <div>

@@ -13,7 +13,6 @@ import {
 
 export default function Category(props: { item: string; id: number }) {
   const photos = [jew, man, electronic, woman];
-  console.log(props.id);
 
   const { pickCategory, setPickCategory } =
     useContext<productContextType>(ProductContext);
