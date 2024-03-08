@@ -1,5 +1,5 @@
 "use client";
-import ef from "@/public/logo-black.svg";
+
 import Link from "next/link";
 import {
   Sheet,
@@ -16,13 +16,17 @@ import {
   ProductContext,
   productContextType,
 } from "../ProductsContext/ProductsContext";
+import CardItem from "./CardItem";
+import { Button } from "../ui/button";
 
 export default function Navbar() {
   const { card } = useContext<productContextType>(ProductContext);
 
+  console.log(card.length);
+
   return (
     <nav>
-      <div className="flex justify-between pt-5 pb-5 items-center">
+      <div className="flex justify-between pt-5 pb-5  items-center">
         <Link href="/">
           <svg
             width="180"
@@ -49,19 +53,25 @@ export default function Navbar() {
             Shop
           </Link>
           <Sheet>
-            <SheetTrigger>
+            <SheetTrigger className="flex gap-1">
               <ShoppingCart />
+              <span>({card.length})</span>
             </SheetTrigger>
-            <SheetContent className="w-1/3 1000max:w-96">
-              <SheetHeader>
+            <SheetContent className="w-1/3 1000max:w-96 flex flex-col gap-5">
+              <SheetHeader className="text-2xl">
+                <b>Orders</b>
+              </SheetHeader>
+              <div className="flex flex-col gap-5 sticky overflow-y-scroll h-90 ">
                 {card &&
                   !!card.length &&
                   card?.map((item: any, indx: any) => {
-                    return <p key={indx}>{item.title}</p>;
+                    return <CardItem {...item} key={indx} />;
                   })}
-              </SheetHeader>
+              </div>
+              <Button className="w-full">Order Now</Button>
             </SheetContent>
           </Sheet>
+
           <Link
             className="bg-black text-white rounded-lg  p-3 pl-5 pr-5"
             href="/login"

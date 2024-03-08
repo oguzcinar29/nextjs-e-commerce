@@ -1,8 +1,15 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 
 import hero1 from "@/public/admin ui/hero/hero-1.png";
+import { useContext } from "react";
+import {
+  ProductContext,
+  productContextType,
+} from "../ProductsContext/ProductsContext";
 export default function HomeHero() {
+  const { setPickCategory } = useContext<productContextType>(ProductContext);
   return (
     <div className="bg-gray-200 relative text-center">
       <Image src={hero1} alt="hero img" />
@@ -16,6 +23,7 @@ export default function HomeHero() {
         <Link
           className="bg-black p-3 w-32 text-white rounded-lg text-center 550max:hidden"
           href="/shop"
+          onClick={() => setPickCategory("all")}
         >
           Shop now
         </Link>

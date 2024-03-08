@@ -5,6 +5,7 @@ import {
 } from "@/components/ProductsContext/ProductsContext";
 import Product from "@/components/shop/Products/Product";
 import { useContext } from "react";
+import { toast } from "sonner";
 
 export default function SingleProduct({ params }: any) {
   const { id } = params;
@@ -15,6 +16,13 @@ export default function SingleProduct({ params }: any) {
   const category: string | undefined = findProduct?.category ?? "";
 
   function handleClick() {
+    toast("Item has been added to card", {
+      description: new Date().toLocaleString(),
+      action: {
+        label: "Ok",
+        onClick: () => console.log("Undo"),
+      },
+    });
     const newObj = {
       ...findProduct,
       count: 1,

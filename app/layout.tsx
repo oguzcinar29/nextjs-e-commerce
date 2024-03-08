@@ -6,6 +6,7 @@ import ProductProvider, {
   ProductContext,
 } from "@/components/ProductsContext/ProductsContext";
 import Footer from "@/components/footer/Footer";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
             {children}
           </ProductProvider>
         </div>
+        <Toaster />
         <Footer />
       </body>
     </html>
