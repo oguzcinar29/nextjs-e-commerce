@@ -1,1 +1,1 @@
-export const siteURL = "http://localhost:3000";
+export const siteURL = "https://nextjs-e-commerce-rosy.vercel.app";
