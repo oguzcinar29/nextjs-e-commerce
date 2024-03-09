@@ -69,7 +69,7 @@ export default function Navbar() {
                   <SheetHeader className="text-2xl">
                     <b>Orders</b>
                   </SheetHeader>
-                  <div className="flex flex-col gap-5 sticky overflow-y-scroll h-90 ">
+                  <div className="flex flex-col gap-5 sticky overflow-y-scroll h-full ">
                     {card &&
                       !!card.length &&
                       card?.map((item: any, indx: any) => {

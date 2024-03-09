@@ -37,7 +37,6 @@ export default function CardItem(props: Card) {
   };
   const deleteItem = (id: any) => {
     toast("Order has been deleted", {
-      description: new Date().toLocaleString(),
       action: {
         label: "Undo",
         onClick: () => console.log("Undo"),

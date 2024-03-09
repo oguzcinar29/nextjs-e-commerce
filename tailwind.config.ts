@@ -19,7 +19,6 @@ const config = {
       "650min": { raw: "(min-width:650px)" },
       "1000max": { raw: "(max-width:1000px)" },
     },
-
     container: {
       center: true,
       padding: "2rem",
