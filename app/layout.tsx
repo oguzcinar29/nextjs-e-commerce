@@ -18,14 +18,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  console.log(pathname);
 
   return (
     <html lang="en">
       <body className={inter.className}>
         {pathname !== "/login" && pathname !== "/register" && (
           <div>
-            <div className=" w-3/4 m-auto">
+            <div className=" w-3/4 m-auto ">
               <ProductProvider>
                 <Navbar />
                 {children}
@@ -35,6 +34,7 @@ export default function RootLayout({
             <Footer />
           </div>
         )}
+
         {pathname === "/login" && (
           <div>
             <ProductProvider>{children}</ProductProvider>

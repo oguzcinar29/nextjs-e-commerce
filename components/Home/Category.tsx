@@ -18,7 +18,7 @@ export default function Category(props: { item: string; id: number }) {
     useContext<productContextType>(ProductContext);
 
   return (
-    <div className="flex flex-col gap-3 justify-between w-90 h-90 rounded-md bg-gray-100 pb-3 text-center">
+    <div className="flex flex-col gap-3 justify-between w-80 h-80 rounded-md bg-gray-100 pb-3 text-center">
       <Image
         className="object-cover  bg-transparent"
         src={photos[props.id]}

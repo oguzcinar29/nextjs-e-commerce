@@ -19,13 +19,7 @@ const config = {
       "650min": { raw: "(min-width:650px)" },
       "1000max": { raw: "(max-width:1000px)" },
     },
-    height: {
-      "90": "30%",
-      auth: "800px",
-    },
-    width: {
-      auth: "608px",
-    },
+
     container: {
       center: true,
       padding: "2rem",
@@ -35,9 +29,6 @@ const config = {
     },
 
     extend: {
-      width: {
-        "90": "350px",
-      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
