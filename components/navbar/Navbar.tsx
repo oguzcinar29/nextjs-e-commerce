@@ -1,5 +1,4 @@
 "use client";
-
 import Link from "next/link";
 import {
   Sheet,
@@ -18,9 +17,13 @@ import {
 } from "../ProductsContext/ProductsContext";
 import CardItem from "./CardItem";
 import { Button } from "../ui/button";
+import { getServerSession } from "next-auth";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Navbar() {
   const { card } = useContext<productContextType>(ProductContext);
+
+  const { data: session } = useSession();
 
   const getTotal = () => {
     let total = 0;
@@ -92,12 +95,15 @@ export default function Navbar() {
               )}
             </SheetContent>{" "}
           </Sheet>
-          <Link
-            className="bg-black text-white rounded-lg  p-3 pl-5 pr-5"
-            href="/login"
-          >
-            Login
-          </Link>
+          {!session?.user && (
+            <Link
+              className="bg-black text-white rounded-lg  p-3 pl-5 pr-5"
+              href="/login"
+            >
+              Login
+            </Link>
+          )}
+          {session?.user && <button onClick={() => signOut()}>Logout</button>}
         </div>
         <MobileLinks />
       </div>
