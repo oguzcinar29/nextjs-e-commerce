@@ -17,6 +17,7 @@ import {
 } from "../ProductsContext/ProductsContext";
 import CardItem from "./CardItem";
 import { Button } from "../ui/button";
+import { signOut, useSession } from "next-auth/react";
 export default function MobileLinks() {
   const { card } = useContext<productContextType>(ProductContext);
   const getTotal = () => {
@@ -26,6 +27,7 @@ export default function MobileLinks() {
     });
     return total;
   };
+  const { data: session } = useSession();
 
   return (
     <>
@@ -43,9 +45,14 @@ export default function MobileLinks() {
                 Shop
               </Link>
 
-              <Link className="text-black  rounded-lg text-lg " href="/login">
-                Login
-              </Link>
+              {!session?.user && (
+                <Link className="text-black  rounded-lg text-lg " href="/login">
+                  Login
+                </Link>
+              )}
+              {session?.user && (
+                <button onClick={() => signOut()}>Logout</button>
+              )}
               <Sheet>
                 <SheetTrigger className="650min:hidden  flex justify-center items-center text-black">
                   <ShoppingCart />
@@ -70,9 +77,19 @@ export default function MobileLinks() {
                             Sub Total:{" "}
                             <b className="text-2xl">${getTotal().toFixed(2)}</b>
                           </span>
-                          <Button className="w-32 400max:w-40 ">
-                            Order Now
-                          </Button>
+
+                          <Link
+                            href={
+                              !session?.user
+                                ? "/login"
+                                : "https://buy.stripe.com/test_eVa3f324SeFj4Hm6op"
+                            }
+                          >
+                            <Button className="w-32 400max:w-40 ">
+                              {" "}
+                              Order Now
+                            </Button>
+                          </Link>
                         </div>
                       </div>
                     )}

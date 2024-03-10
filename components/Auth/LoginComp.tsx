@@ -8,12 +8,18 @@ import logo from "@/public/logo-black.svg";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
+import { siteURL } from "@/URL";
+import {
+  ProductContext,
+  productContextType,
+} from "../ProductsContext/ProductsContext";
 export default function Login() {
+  const { card, setCard } = useContext<productContextType>(ProductContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
@@ -30,8 +36,18 @@ export default function Login() {
       redirect: false,
     });
     if (!res?.error) {
-      router.push("/");
-      router.refresh();
+      const res2 = await fetch(`${siteURL}/api/cards`, {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ card, email }),
+      });
+      const data = await res2.json();
+      console.log(data);
+      if (res2.ok) {
+        // we are here i have to set card when user logged in
+        router.push("/");
+        router.refresh();
+      }
     } else {
       setErr("Invalid Error! Try again.");
     }
