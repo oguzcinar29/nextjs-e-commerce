@@ -8,7 +8,7 @@ export interface ICards extends Document {
 }
 
 const CardsSchema = new Schema<ICards>({
-  productsArr: [{ type: Schema.Types.ObjectId, ref: "Products" }], // Assuming each item in the array is a reference to a product document
+  productsArr: [], // Assuming each item in the array is a reference to a product document
   userId: { type: Schema.Types.ObjectId, ref: "Users" },
 });
 

@@ -21,13 +21,13 @@ import { getServerSession } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 
 export default function Navbar() {
-  const { card } = useContext<productContextType>(ProductContext);
+  const { card, setCard } = useContext<productContextType>(ProductContext);
 
   const { data: session } = useSession();
 
   const getTotal = () => {
     let total = 0;
-    card.forEach((item: any) => {
+    card?.forEach((item: any) => {
       total += item.count * item.price;
     });
     return total;
@@ -84,11 +84,19 @@ export default function Navbar() {
                       Sub Total:{" "}
                       <b className="text-2xl">${getTotal().toFixed(2)}</b>
                     </span>
-                    <Button className="w-32">Order Now</Button>
+                    <Link
+                      href={
+                        !session?.user
+                          ? "/login"
+                          : "https://buy.stripe.com/test_eVa3f324SeFj4Hm6op"
+                      }
+                    >
+                      <Button className="w-32 400max:w-40 "> Order Now</Button>
+                    </Link>
                   </div>
                 </div>
               )}
-              {card.length === 0 && (
+              {card?.length === 0 && (
                 <div className="flex justify-center items-center mt-72">
                   <b className="text-3xl">Your cart is empty</b>
                 </div>
@@ -103,7 +111,17 @@ export default function Navbar() {
               Login
             </Link>
           )}
-          {session?.user && <button onClick={() => signOut()}>Logout</button>}
+          {session?.user && (
+            <button
+              onClick={() => {
+                window.localStorage.clear();
+                setCard([]);
+                signOut();
+              }}
+            >
+              Logout
+            </button>
+          )}
         </div>
         <MobileLinks />
       </div>

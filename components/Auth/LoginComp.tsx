@@ -19,14 +19,16 @@ import {
   productContextType,
 } from "../ProductsContext/ProductsContext";
 export default function Login() {
-  const { card, setCard } = useContext<productContextType>(ProductContext);
+  const { card, setCard, setCardId, cardId } =
+    useContext<productContextType>(ProductContext);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
   const { data: session } = useSession();
 
   const [err, setErr] = useState<string>("");
-  console.log(session);
+
+  console.log(cardId);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -44,14 +46,17 @@ export default function Login() {
       const data = await res2.json();
       console.log(data);
       if (res2.ok) {
-        // we are here i have to set card when user logged in
-        router.push("/");
-        router.refresh();
+        window.localStorage.setItem("products", JSON.stringify(data.newArr));
+        window.localStorage.setItem("cardId", JSON.stringify(data.cardId));
+        setCard(data.newArr);
+        setCardId(data.cardId);
       }
     } else {
       setErr("Invalid Error! Try again.");
     }
   };
+
+  console.log(card);
 
   return (
     <div className="w-full overflow-y-visible">

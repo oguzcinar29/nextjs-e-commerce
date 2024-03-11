@@ -1,21 +1,27 @@
 "use client";
+import { siteURL } from "@/URL";
 import {
   ProductContext,
   productContextType,
 } from "@/components/ProductsContext/ProductsContext";
 import Product from "@/components/shop/Products/Product";
+import { useSession } from "next-auth/react";
 import { useContext } from "react";
 import { toast } from "sonner";
 
 export default function SingleProduct({ params }: any) {
   const { id } = params;
-  const { products, pickCategory, card, setCard } =
+  const { products, pickCategory, card, setCard, cardId } =
     useContext<productContextType>(ProductContext);
 
   const findProduct = products?.find((item: any) => item._id === id);
   const category: string | undefined = findProduct?.category ?? "";
 
-  function handleClick() {
+  const { data: session } = useSession();
+
+  console.log(cardId);
+
+  async function handleClick() {
     toast("Item has been added to card", {
       description: new Date().toLocaleString(),
       action: {
@@ -61,6 +67,15 @@ export default function SingleProduct({ params }: any) {
         localStorage.setItem("products", JSON.stringify(oldItems));
       }
       setCard(oldItems as any);
+    }
+    console.log(cardId);
+
+    if (session?.user) {
+      const res = await fetch(`${siteURL}/api/cards/${cardId}`, {
+        method: "PUT",
+        cache: "no-cache",
+        body: JSON.stringify(id),
+      });
     }
   }
 

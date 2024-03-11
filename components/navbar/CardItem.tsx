@@ -9,11 +9,15 @@ import {
 import { useContext } from "react";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
+import { siteURL } from "@/URL";
 
 export default function CardItem(props: Card) {
   const { setCard, card } = useContext<productContextType>(ProductContext);
 
-  const decreaseCount = (id: any) => {
+  const { data: session } = useSession();
+
+  const decreaseCount = async (id: any) => {
     var items = JSON.parse(window.localStorage.getItem("products") || "[]");
 
     var findIndex = items.findIndex((item: any) => item._id === id);
