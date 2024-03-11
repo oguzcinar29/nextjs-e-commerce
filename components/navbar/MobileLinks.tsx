@@ -9,7 +9,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, ShoppingCart } from "lucide-react";
+import {
+  LogOutIcon,
+  Menu,
+  Settings,
+  ShoppingCart,
+  UserIcon,
+} from "lucide-react";
 import { useContext, useState } from "react";
 import {
   ProductContext,
@@ -18,8 +24,24 @@ import {
 import CardItem from "./CardItem";
 import { Button } from "../ui/button";
 import { signOut, useSession } from "next-auth/react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 export default function MobileLinks() {
-  const { card } = useContext<productContextType>(ProductContext);
+  const { card, setCard } = useContext<productContextType>(ProductContext);
   const getTotal = () => {
     let total = 0;
     card.forEach((item: any) => {
@@ -49,9 +71,6 @@ export default function MobileLinks() {
                 <Link className="text-black  rounded-lg text-lg " href="/login">
                   Login
                 </Link>
-              )}
-              {session?.user && (
-                <button onClick={() => signOut()}>Logout</button>
               )}
               <Sheet>
                 <SheetTrigger className="650min:hidden  flex justify-center items-center text-black">
@@ -101,6 +120,29 @@ export default function MobileLinks() {
                   </SheetContent>
                 }
               </Sheet>
+              {session?.user && (
+                <div className="flex flex-col justify-center items-center gap-10">
+                  <Link className="flex gap-1 items-center" href="/profile">
+                    <span>
+                      <UserIcon color="black" />
+                    </span>
+                    Profile
+                  </Link>
+                  <button
+                    className="flex gap-1 items-center"
+                    onClick={() => {
+                      window.localStorage.clear();
+                      setCard([]);
+                      signOut();
+                    }}
+                  >
+                    <span>
+                      <LogOutIcon color="black" />
+                    </span>
+                    Logout
+                  </button>
+                </div>
+              )}
             </SheetDescription>
           </SheetHeader>
         </SheetContent>

@@ -18,6 +18,8 @@ const config = {
       "750in": { raw: "(min-width:750px)" },
       "650min": { raw: "(min-width:650px)" },
       "1000max": { raw: "(max-width:1000px)" },
+      "560min-h": { raw: "(max-width:1150px)" },
+      "560max-h": { raw: "(max-height:560px)" },
     },
     container: {
       center: true,

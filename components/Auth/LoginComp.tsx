@@ -61,9 +61,9 @@ export default function Login() {
   console.log(card);
 
   return (
-    <div className="w-full overflow-y-visible">
-      <div className="flex gap-20">
-        <div className=" relative text-center">
+    <div className="w-full overflow-y-visible  560min-h:bg-slate-100">
+      <div className="flex gap-20 560min-h:flex 560min-h:justify-center 560min-h:items-center">
+        <div className=" relative text-center 560min-h:hidden ">
           <img
             style={{ height: "100vh" }}
             src={img.src}
@@ -73,7 +73,7 @@ export default function Login() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col justify-center gap-5 "
+          className="flex flex-col justify-center gap-5  560min-h:justify-center  560min-h:h-screen "
         >
           <div className="pb-5">
             <b className="text-2xl flex gap-3">

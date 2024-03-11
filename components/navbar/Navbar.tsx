@@ -8,7 +8,13 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Menu, ShoppingCart } from "lucide-react";
+import {
+  LogOutIcon,
+  Menu,
+  Settings,
+  ShoppingCart,
+  UserIcon,
+} from "lucide-react";
 import MobileLinks from "./MobileLinks";
 import { useContext, useEffect, useState } from "react";
 import {
@@ -19,6 +25,21 @@ import CardItem from "./CardItem";
 import { Button } from "../ui/button";
 import { getServerSession } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 export default function Navbar() {
   const { card, setCard } = useContext<productContextType>(ProductContext);
@@ -112,15 +133,40 @@ export default function Navbar() {
             </Link>
           )}
           {session?.user && (
-            <button
-              onClick={() => {
-                window.localStorage.clear();
-                setCard([]);
-                signOut();
-              }}
-            >
-              Logout
-            </button>
+            <div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex justify-center items-center">
+                    <Settings />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 flex flex-col gap-2">
+                  <DropdownMenuItem className="cursor-pointer">
+                    <Link className="flex gap-1 items-center" href="/profile">
+                      <span>
+                        <UserIcon color="black" />
+                      </span>
+                      Profile
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="cursor-pointer">
+                    <button
+                      className="flex gap-1 items-center"
+                      onClick={() => {
+                        window.localStorage.clear();
+                        setCard([]);
+                        signOut();
+                      }}
+                    >
+                      <span>
+                        <LogOutIcon color="black" />
+                      </span>
+                      Logout
+                    </button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           )}
         </div>
         <MobileLinks />
