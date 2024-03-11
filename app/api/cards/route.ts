@@ -17,15 +17,14 @@ export async function POST(request: NextRequest) {
 
     card?.forEach((item: any) => findCard?.productsArr.push(item));
 
-    const cardId = typeof findCard?._id !== "undefined" ? findCard?._id : "";
+    let cardId = typeof findCard?._id !== "undefined" ? findCard?._id : "";
 
     if (typeof findCard === "undefined") {
       await Cards.create({ productsArr: card, userId });
       const newArr = card;
       const findCard2 = await Cards.find();
       console.log(findCard2);
-
-      // heree find card id
+      cardId = findCard2[findCard2.length - 1]._id.toString();
 
       return NextResponse.json({ newArr, cardId }, { status: 200 });
     } else {

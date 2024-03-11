@@ -5,31 +5,85 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest, { params }: any) {
   const { id } = params;
-  console.log(id);
 
-  const itemId = await request.json();
-  console.log(itemId);
+  const data = await request.json();
+
+  const itemId = typeof data.id === "undefined" ? data : data.id;
+  const method = data?.method;
 
   try {
     await connectMongoDB();
     const findCard = await Cards.findById(id);
     const cardArr = findCard.productsArr;
 
-    const findProduct = cardArr.find((item: any) => item._id === itemId);
-    console.log(findProduct);
+    const findProduct = cardArr.find(
+      (item: any) => item._id.toString() === itemId.toString()
+    );
+
     if (!findProduct) {
       const product = await Products.findById(itemId);
-      console.log(product);
+
       const newProduct = {
-        ...product,
+        _id: product._id,
+        title: product.title,
+        price: product.price,
+        description: product.description,
+        category: product.category,
+        image: product.image,
         count: 1,
       };
+
       cardArr.push(newProduct);
       await Cards.findByIdAndUpdate(id, { productsArr: cardArr });
+    } else {
+      const product = await Products.findById(itemId);
+
+      const cards = await Cards.find();
+
+      const findCard3 = cards.find(
+        (item: any) => item._id.toString() === id.toString()
+      );
+
+      const cardsArr = findCard3.productsArr;
+
+      const findIndex = cardsArr.findIndex(
+        (item: any) => item._id.toString() === itemId.toString()
+      );
+
+      if (method) {
+        cardsArr[findIndex].count -= 1;
+      } else {
+        cardsArr[findIndex].count += 1;
+      }
+      await Cards.findByIdAndUpdate(id, { productsArr: cardsArr });
     }
+    return NextResponse.json({ message: "hey" }, { status: 200 });
   } catch (err) {
     console.log(err);
+    return NextResponse.json({ message: "error" }, { status: 500 });
   }
+}
 
-  return NextResponse.json({ message: "hey" }, { status: 200 });
+export async function DELETE(request: NextRequest, { params }: any) {
+  const { id } = params;
+
+  const itemId = await request.json();
+  console.log(itemId);
+
+  try {
+    await connectMongoDB();
+    const cards = await Cards.findById(id);
+
+    let cardsArr = cards.productsArr;
+
+    const newArr = cardsArr.filter(
+      (item: any) => item._id.toString() !== itemId.toString()
+    );
+    console.log(newArr);
+    await Cards.findByIdAndUpdate(id, { productsArr: newArr });
+    return NextResponse.json({ message: "success" }, { status: 200 });
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ message: "error" }, { status: 500 });
+  }
 }

@@ -13,7 +13,8 @@ import { useSession } from "next-auth/react";
 import { siteURL } from "@/URL";
 
 export default function CardItem(props: Card) {
-  const { setCard, card } = useContext<productContextType>(ProductContext);
+  const { setCard, card, cardId } =
+    useContext<productContextType>(ProductContext);
 
   const { data: session } = useSession();
 
@@ -24,13 +25,20 @@ export default function CardItem(props: Card) {
 
     if (items[findIndex].count !== 1) {
       items[findIndex].count--;
+      if (session?.user) {
+        const res = await fetch(`${siteURL}/api/cards/${cardId}`, {
+          method: "PUT",
+          cache: "no-cache",
+          body: JSON.stringify({ id, method: "dec" }),
+        });
+      }
     }
 
     setCard(items);
 
     window.localStorage.setItem("products", JSON.stringify(items));
   };
-  const increaseCount = (id: any) => {
+  const increaseCount = async (id: any) => {
     var items = JSON.parse(window.localStorage.getItem("products") || "[]");
 
     var findIndex = items.findIndex((item: any) => item._id === id);
@@ -38,8 +46,24 @@ export default function CardItem(props: Card) {
     items[findIndex].count++;
     setCard(items);
     window.localStorage.setItem("products", JSON.stringify(items));
+    if (session?.user) {
+      const res = await fetch(`${siteURL}/api/cards/${cardId}`, {
+        method: "PUT",
+        cache: "no-cache",
+        body: JSON.stringify(id),
+      });
+    }
   };
-  const deleteItem = (id: any) => {
+  const deleteItem = async (id: any) => {
+    console.log(cardId);
+
+    if (session?.user) {
+      const res = await fetch(`${siteURL}/api/cards/${cardId}`, {
+        method: "DELETE",
+        cache: "no-cache",
+        body: JSON.stringify(id),
+      });
+    }
     toast("Order has been deleted", {
       action: {
         label: "Undo",

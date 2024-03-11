@@ -50,6 +50,8 @@ export default function Login() {
         window.localStorage.setItem("cardId", JSON.stringify(data.cardId));
         setCard(data.newArr);
         setCardId(data.cardId);
+        router.push("/");
+        router.refresh();
       }
     } else {
       setErr("Invalid Error! Try again.");
