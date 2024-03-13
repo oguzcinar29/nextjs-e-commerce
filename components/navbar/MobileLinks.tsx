@@ -97,13 +97,7 @@ export default function MobileLinks() {
                             <b className="text-2xl">${getTotal().toFixed(2)}</b>
                           </span>
 
-                          <Link
-                            href={
-                              !session?.user
-                                ? "/login"
-                                : "https://buy.stripe.com/test_eVa3f324SeFj4Hm6op"
-                            }
-                          >
+                          <Link href={!session?.user ? "/login" : "/checkout"}>
                             <Button className="w-32 400max:w-40 ">
                               {" "}
                               Order Now
