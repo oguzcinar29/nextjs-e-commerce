@@ -1,3 +1,9 @@
+import ThankYouPage from "@/components/ThankYouPage";
+
 export default function ThankYou() {
-  return <div>thank you</div>;
+  return (
+    <div>
+      <ThankYouPage />
+    </div>
+  );
 }

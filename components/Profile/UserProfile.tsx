@@ -36,8 +36,6 @@ export default function UserProfile() {
           throw new Error("Failed to fetch users data");
         } else {
           const users = await res.json();
-          console.log(users.users);
-
           setUsers(users.users);
         }
       } catch (err) {

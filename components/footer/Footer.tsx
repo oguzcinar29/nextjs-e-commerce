@@ -1,9 +1,11 @@
 import {
   CircleDollarSign,
   Facebook,
+  Headset,
   Instagram,
   Package,
   Twitter,
+  WalletCardsIcon,
 } from "lucide-react";
 import logo from "@/public/logo-white.svg";
 export default function Footer() {
@@ -25,14 +27,14 @@ export default function Footer() {
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <Package size={30} />
+          <Headset size={30} />
           <b className="text-lg pt-3">Online Support</b>
           <p className="text-base text-gray-500">
             24 hours a day, 7 days a week
           </p>
         </div>
         <div className="flex flex-col gap-2">
-          <Package size={30} />
+          <WalletCardsIcon size={30} />
           <b className="text-lg pt-3">Flexible Payment</b>
           <p className="text-base text-gray-500">
             Pay with multiple credit cards

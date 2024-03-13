@@ -40,9 +40,9 @@ export async function PUT(request: NextRequest, { params }: any) {
 
       const cards = await Cards.find();
 
-      const findCard3 = cards.find(
-        (item: any) => item._id.toString() === id.toString()
-      );
+      const findCard3 =
+        cards &&
+        cards?.find((item: any) => item._id.toString() === id.toString());
 
       const cardsArr = findCard3.productsArr;
 
