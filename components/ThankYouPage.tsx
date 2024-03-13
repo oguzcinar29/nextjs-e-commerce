@@ -9,7 +9,7 @@ export default function ThankYouPage() {
       </h1>
       <p>
         Your order has been confirmed. You will receive an email confirmation
-        shortly. Your order ID is 636326KOF344FL4
+        shortly. Your order ID is 636326KOF344FL45
       </p>
       <div className="flex gap-3 justify-center items-center">
         <Link href="/profile/my-orders">
