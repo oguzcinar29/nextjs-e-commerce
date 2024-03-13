@@ -1,6 +1,7 @@
 "use client";
 
 import { siteURL } from "@/URL";
+import { useSession } from "next-auth/react";
 import React, { createContext, useEffect, useState } from "react";
 
 export type Product = {
@@ -10,6 +11,14 @@ export type Product = {
   category: string;
   image: string;
   _id: string;
+  count: number;
+};
+export type User = {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+  __v: number;
 };
 export type Card = {
   count: number;
@@ -22,6 +31,7 @@ export type Card = {
 };
 export type productContextType = {
   products: Product[];
+
   cardId: string;
   setCardId: React.Dispatch<React.SetStateAction<string>>;
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
@@ -42,6 +52,7 @@ export const productContextDefaultValue: productContextType = {
   setCardId: () => {},
   setCard: () => {},
   categories: [],
+
   pickCategory: "",
   setPickCategory: () => {},
   productsLoading: false,
@@ -83,8 +94,6 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   const [card, setCard] = useState<Card[]>([]);
 
   const [cardId, setCardId] = useState<string>("");
-
-  console.log(cardId);
 
   useEffect(() => {
     setCard(

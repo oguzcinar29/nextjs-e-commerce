@@ -58,8 +58,6 @@ export default function Login() {
     }
   };
 
-  console.log(card);
-
   return (
     <div className="w-full overflow-y-visible  560min-h:bg-slate-100">
       <div className="flex gap-20 560min-h:flex 560min-h:justify-center 560min-h:items-center">

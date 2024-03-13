@@ -105,13 +105,7 @@ export default function Navbar() {
                       Sub Total:{" "}
                       <b className="text-2xl">${getTotal().toFixed(2)}</b>
                     </span>
-                    <Link
-                      href={
-                        !session?.user
-                          ? "/login"
-                          : "https://buy.stripe.com/test_eVa3f324SeFj4Hm6op"
-                      }
-                    >
+                    <Link href={!session?.user ? "/login" : "/checkout"}>
                       <Button className="w-32 400max:w-40 "> Order Now</Button>
                     </Link>
                   </div>
@@ -141,23 +135,26 @@ export default function Navbar() {
                   </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56 flex flex-col gap-2">
-                  <DropdownMenuItem className="cursor-pointer">
-                    <Link className="flex gap-1 items-center" href="/profile">
-                      <span>
-                        <UserIcon color="black" />
-                      </span>
-                      Profile
-                    </Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem className="cursor-pointer">
-                    <button
-                      className="flex gap-1 items-center"
-                      onClick={() => {
-                        window.localStorage.clear();
-                        setCard([]);
-                        signOut();
-                      }}
-                    >
+                  <Link href="/profile/personal-information">
+                    <DropdownMenuItem className="cursor-pointer">
+                      <div className="flex gap-1 items-center">
+                        <span>
+                          <UserIcon color="black" />
+                        </span>
+                        Profile
+                      </div>
+                    </DropdownMenuItem>
+                  </Link>
+
+                  <DropdownMenuItem
+                    onClick={() => {
+                      window.localStorage.clear();
+                      setCard([]);
+                      signOut();
+                    }}
+                    className="cursor-pointer"
+                  >
+                    <button className="flex gap-1 items-center">
                       <span>
                         <LogOutIcon color="black" />
                       </span>

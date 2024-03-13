@@ -1,8 +1,16 @@
 import { connectMongoDB } from "@/lib/mongodb";
 import Users from "@/models/users";
-import NextAuth from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrpyt from "bcrypt";
+
+declare module "next-auth" {
+  interface Session {
+    user: {
+      id: string;
+    } & DefaultSession["user"];
+  }
+}
 const handler = NextAuth({
   providers: [
     CredentialsProvider({
@@ -42,9 +50,13 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session, token }) {
-      return { ...session, token };
-    },
+    session: ({ session, token }) => ({
+      ...session,
+      user: {
+        ...session.user,
+        id: token.sub,
+      },
+    }),
   },
   session: {
     strategy: "jwt",
