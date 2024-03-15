@@ -28,8 +28,6 @@ export default function Login() {
 
   const [err, setErr] = useState<string>("");
 
-  console.log(cardId);
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const res = await signIn("credentials", {

@@ -11,6 +11,7 @@ import { Toaster } from "sonner";
 import { usePathname } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import LeftMenu from "@/components/admin/LeftMenu/LeftMenu";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,22 +22,26 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
 
+  console.log(pathname.startsWith("/admin"));
+
   return (
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider>
-          {pathname !== "/login" && pathname !== "/register" && (
-            <div>
-              <div className=" w-3/4 m-auto ">
-                <ProductProvider>
-                  <Navbar />
-                  {children}
-                </ProductProvider>
+          {pathname !== "/login" &&
+            pathname !== "/register" &&
+            !pathname.startsWith("/admin") && (
+              <div>
+                <div className=" w-3/4 m-auto ">
+                  <ProductProvider>
+                    <Navbar />
+                    {children}
+                  </ProductProvider>
+                </div>
+                <Toaster position="top-center" />
+                <Footer />
               </div>
-              <Toaster />
-              <Footer />
-            </div>
-          )}
+            )}
 
           {pathname === "/login" && (
             <div>
@@ -46,6 +51,17 @@ export default function RootLayout({
           {pathname === "/register" && (
             <div>
               <ProductProvider>{children}</ProductProvider>
+            </div>
+          )}
+
+          {pathname.startsWith("/admin") && (
+            <div className="bg-[#0B2447] text-white">
+              <ProductProvider>
+                <div className="flex">
+                  <LeftMenu />
+                  <div className="w-3/4 p-6  ">{children}</div>
+                </div>
+              </ProductProvider>
             </div>
           )}
         </SessionProvider>

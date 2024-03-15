@@ -7,11 +7,14 @@ export interface IUsers extends Document {
   password: string;
 }
 
-const UsersSchema = new Schema<IUsers>({
-  name: String,
-  email: String,
-  password: String,
-});
+const UsersSchema = new Schema<IUsers>(
+  {
+    name: String,
+    email: String,
+    password: String,
+  },
+  { timestamps: true }
+);
 
 const Users = mongoose.models.Users || mongoose.model("Users", UsersSchema);
 

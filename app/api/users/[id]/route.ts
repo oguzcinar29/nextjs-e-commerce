@@ -18,3 +18,18 @@ export async function PUT(request: NextRequest, { params }: any) {
     return NextResponse.json({ message: "err" }, { status: 500 });
   }
 }
+
+export async function DELETE(request: NextRequest, { params }: any) {
+  const { id } = params;
+  console.log(id);
+
+  try {
+    await connectMongoDB();
+    await Users.findByIdAndDelete(id);
+    const users = await Users.find();
+    return NextResponse.json({ users }, { status: 200 });
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ message: "error" }, { status: 500 });
+  }
+}

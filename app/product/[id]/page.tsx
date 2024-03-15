@@ -23,7 +23,6 @@ export default function SingleProduct({ params }: any) {
 
   async function handleClick() {
     toast("Item has been added to card", {
-      description: new Date().toLocaleString(),
       action: {
         label: "Ok",
         onClick: () => console.log("Undo"),

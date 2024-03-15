@@ -16,10 +16,13 @@ export interface ICards extends Document {
   userId: Schema.Types.ObjectId;
 }
 
-const CardsSchema = new Schema<ICards>({
-  productsArr: [],
-  userId: { type: Schema.Types.ObjectId, ref: "Users" },
-});
+const CardsSchema = new Schema<ICards>(
+  {
+    productsArr: [],
+    userId: { type: Schema.Types.ObjectId, ref: "Users" },
+  },
+  { timestamps: true }
+);
 
 const Cards = mongoose.models.Cards || mongoose.model("Cards", CardsSchema);
 

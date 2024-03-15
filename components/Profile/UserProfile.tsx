@@ -60,11 +60,13 @@ export default function UserProfile() {
   const router = useRouter();
 
   return (
-    <div className="w-1/3 flex flex-col gap-8  1000max:w-full 1000max:text-center">
-      <h1 className="text-3xl font-extrabold from-neutral-950">My Profile</h1>
-      <div className="pl-4 flex flex-col gap-10 ">
+    <div className="w-1/3 flex flex-col gap-8  1000max:w-full ">
+      <h1 className="text-3xl font-extrabold from-neutral-950 1000max:text-center ">
+        My Profile
+      </h1>
+      <div className="pl-4 flex flex-col gap-10">
         <div className="flex gap-2">
-          <UserCircle2 className="w-12 h-12" />
+          <UserCircle2 className="w-12 h-12 min-h-12 min-w-12" />
           <div className="flex flex-col gap-0">
             <b>{name}</b>
             <span>{email}</span>

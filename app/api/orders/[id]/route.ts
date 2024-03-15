@@ -12,10 +12,10 @@ export async function GET(request: NextRequest, { params }: any) {
     await connectMongoDB();
     const orders = await Orders.find();
     const findOrder = orders.find((item: any) => item.userId.toString() === id);
-    console.log(findOrder);
+    const ordersArr = findOrder?.productsArr;
+    return NextResponse.json({ ordersArr }, { status: 200 });
   } catch (err) {
     console.log(err);
+    return NextResponse.json({ message: "success" }, { status: 200 });
   }
-
-  return NextResponse.json({ message: "success" }, { status: 200 });
 }

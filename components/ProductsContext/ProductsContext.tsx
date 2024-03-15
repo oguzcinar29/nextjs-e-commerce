@@ -31,7 +31,8 @@ export type Card = {
 };
 export type productContextType = {
   products: Product[];
-
+  users: User[];
+  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
   cardId: string;
   setCardId: React.Dispatch<React.SetStateAction<string>>;
   setProducts: React.Dispatch<React.SetStateAction<Product[]>>;
@@ -52,7 +53,8 @@ export const productContextDefaultValue: productContextType = {
   setCardId: () => {},
   setCard: () => {},
   categories: [],
-
+  users: [],
+  setUsers: () => {},
   pickCategory: "",
   setPickCategory: () => {},
   productsLoading: false,
@@ -112,6 +114,31 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     );
   }, []);
 
+  const [users, setUsers] = useState<User[]>([]);
+  const getUsers = async () => {
+    try {
+      const res = await fetch(`${siteURL}/api/users`, {
+        cache: "no-cache",
+      });
+      if (!res.ok) {
+        throw new Error("Failed to fetch users");
+      } else {
+        const data = await res.json();
+        setUsers(data.users);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    console.log("users");
+
+    getUsers();
+  }, []);
+
+  useEffect(() => {}, []);
+
   const values: any = {
     products,
     setProducts,
@@ -124,6 +151,8 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     setCard,
     cardId,
     setCardId,
+    users,
+    setUsers,
   };
 
   return (

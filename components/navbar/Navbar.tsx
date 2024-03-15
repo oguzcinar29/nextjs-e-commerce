@@ -2,6 +2,7 @@
 import Link from "next/link";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -82,6 +83,11 @@ export default function Navbar() {
           <Link className="text-slate-600" href="/shop">
             Shop
           </Link>
+          {session?.user?.name === "admin" && (
+            <Link className="text-slate-600" href="/admin">
+              Admin
+            </Link>
+          )}
           <Sheet>
             <SheetTrigger className="flex gap-1">
               <ShoppingCart />
@@ -105,9 +111,14 @@ export default function Navbar() {
                       Sub Total:{" "}
                       <b className="text-2xl">${getTotal().toFixed(2)}</b>
                     </span>
-                    <Link href={!session?.user ? "/login" : "/checkout"}>
-                      <Button className="w-32 400max:w-40 "> Order Now</Button>
-                    </Link>
+                    <SheetClose asChild>
+                      <Link href={!session?.user ? "/login" : "/checkout"}>
+                        <Button className="w-32 400max:w-40 ">
+                          {" "}
+                          Order Now
+                        </Button>
+                      </Link>
+                    </SheetClose>
                   </div>
                 </div>
               )}

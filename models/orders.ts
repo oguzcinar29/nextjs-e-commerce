@@ -16,10 +16,13 @@ export interface IOrders extends Document {
   userId: Schema.Types.ObjectId;
 }
 
-const OrdersSchema = new Schema<IOrders>({
-  productsArr: [],
-  userId: { type: Schema.Types.ObjectId, ref: "Users" },
-});
+const OrdersSchema = new Schema<IOrders>(
+  {
+    productsArr: [],
+    userId: { type: Schema.Types.ObjectId, ref: "Users" },
+  },
+  { timestamps: true }
+);
 
 const Orders = mongoose.models.Orders || mongoose.model("Orders", OrdersSchema);
 

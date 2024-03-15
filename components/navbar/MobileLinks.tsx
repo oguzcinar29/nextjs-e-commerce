@@ -3,6 +3,7 @@ import ef from "@/public/logo-black.svg";
 import Link from "next/link";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -60,23 +61,34 @@ export default function MobileLinks() {
         <SheetContent>
           <SheetHeader>
             <SheetDescription className="flex flex-col  pt-10 gap-10">
-              <Link className="text-slate-600 text-lg" href="/">
-                Home
-              </Link>
-              <Link className="text-slate-600 text-lg" href="/shop">
-                Shop
-              </Link>
-
-              {!session?.user && (
-                <Link className="text-black  rounded-lg text-lg " href="/login">
-                  Login
+              <SheetClose asChild>
+                <Link className="text-slate-600 text-lg" href="/">
+                  Home
                 </Link>
-              )}
+              </SheetClose>
+              <SheetClose asChild>
+                <Link className="text-slate-600 text-lg" href="/shop">
+                  Shop
+                </Link>
+              </SheetClose>
+              <SheetClose asChild>
+                {!session?.user && (
+                  <Link
+                    className="text-black  rounded-lg text-lg "
+                    href="/login"
+                  >
+                    Login
+                  </Link>
+                )}
+              </SheetClose>
               <Sheet>
-                <SheetTrigger className="650min:hidden  flex justify-center items-center text-black">
-                  <ShoppingCart />
-                  <span>({card?.length})</span>
-                </SheetTrigger>
+                <SheetClose asChild>
+                  <SheetTrigger className="650min:hidden  flex justify-center items-center text-black">
+                    <ShoppingCart />
+
+                    <span>({card?.length})</span>
+                  </SheetTrigger>
+                </SheetClose>
                 {
                   <SheetContent className="w-full flex flex-col gap-5">
                     {card.length !== 0 && (
@@ -96,13 +108,16 @@ export default function MobileLinks() {
                             Sub Total:{" "}
                             <b className="text-2xl">${getTotal().toFixed(2)}</b>
                           </span>
-
-                          <Link href={!session?.user ? "/login" : "/checkout"}>
-                            <Button className="w-32 400max:w-40 ">
-                              {" "}
-                              Order Now
-                            </Button>
-                          </Link>
+                          <SheetClose asChild>
+                            <Link
+                              href={!session?.user ? "/login" : "/checkout"}
+                            >
+                              <Button className="w-32 400max:w-40 ">
+                                {" "}
+                                Order Now
+                              </Button>
+                            </Link>
+                          </SheetClose>
                         </div>
                       </div>
                     )}
@@ -116,12 +131,14 @@ export default function MobileLinks() {
               </Sheet>
               {session?.user && (
                 <div className="flex flex-col justify-center items-center gap-10">
-                  <Link className="flex gap-1 items-center" href="/profile">
-                    <span>
-                      <UserIcon color="black" />
-                    </span>
-                    Profile
-                  </Link>
+                  <SheetClose asChild>
+                    <Link className="flex gap-1 items-center" href="/profile">
+                      <span>
+                        <UserIcon color="black" />
+                      </span>
+                      Profile
+                    </Link>
+                  </SheetClose>
                   <button
                     className="flex gap-1 items-center"
                     onClick={() => {

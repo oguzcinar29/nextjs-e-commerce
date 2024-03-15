@@ -9,13 +9,18 @@ export interface IProducts extends Document {
   image: string;
 }
 
-const productsSchema = new Schema<IProducts>({
-  title: String,
-  price: Number,
-  description: String,
-  category: String,
-  image: String,
-});
+const productsSchema = new Schema<IProducts>(
+  {
+    title: String,
+    price: Number,
+    description: String,
+    category: String,
+    image: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
 const Products =
   mongoose.models.Products || mongoose.model("Products", productsSchema);
