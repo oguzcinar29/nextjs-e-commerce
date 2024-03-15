@@ -11,7 +11,7 @@ export async function PUT(request: NextRequest, { params }: any) {
 
   try {
     await connectMongoDB();
-    await Users.findByIdAndUpdate(id, { name, email }).populate("creator");
+    await Users.findByIdAndUpdate(id, { name, email });
     return NextResponse.json({ message: "succsess" }, { status: 200 });
   } catch (err) {
     console.log(err);
@@ -26,7 +26,7 @@ export async function DELETE(request: NextRequest, { params }: any) {
   try {
     await connectMongoDB();
     await Users.findByIdAndDelete(id);
-    const users = await Users.find({}).populate("creator");
+    const users = await Users.find({});
     return NextResponse.json({ users }, { status: 200 });
   } catch (err) {
     console.log(err);
