@@ -1,7 +1,7 @@
 import { connectMongoDB } from "@/lib/mongodb";
 import Users from "@/models/users";
 import { NextRequest, NextResponse } from "next/server";
-
+export const dynamic = "force-dynamic";
 export async function PUT(request: NextRequest, { params }: any) {
   const { id } = params;
   console.log(id);
@@ -11,7 +11,7 @@ export async function PUT(request: NextRequest, { params }: any) {
 
   try {
     await connectMongoDB();
-    await Users.findByIdAndUpdate(id, { name, email });
+    await Users.findByIdAndUpdate(id, { name, email }).populate("creator");
     return NextResponse.json({ message: "succsess" }, { status: 200 });
   } catch (err) {
     console.log(err);
@@ -26,7 +26,7 @@ export async function DELETE(request: NextRequest, { params }: any) {
   try {
     await connectMongoDB();
     await Users.findByIdAndDelete(id);
-    const users = await Users.find();
+    const users = await Users.find().populate("creator");
     return NextResponse.json({ users }, { status: 200 });
   } catch (err) {
     console.log(err);
