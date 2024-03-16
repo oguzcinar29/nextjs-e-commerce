@@ -42,7 +42,6 @@ export default function Login() {
         body: JSON.stringify({ card, email }),
       });
       const data = await res2.json();
-      console.log(data);
       if (res2.ok) {
         window.localStorage.setItem("products", JSON.stringify(data.newArr));
         window.localStorage.setItem("cardId", JSON.stringify(data.cardId));

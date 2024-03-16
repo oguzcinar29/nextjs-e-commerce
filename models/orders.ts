@@ -13,12 +13,14 @@ export interface IOrdersTypes extends Document {
 
 export interface IOrders extends Document {
   productsArr: IOrdersTypes[];
+
   userId: Schema.Types.ObjectId;
 }
 
 const OrdersSchema = new Schema<IOrders>(
   {
     productsArr: [],
+
     userId: { type: Schema.Types.ObjectId, ref: "Users" },
   },
   { timestamps: true }

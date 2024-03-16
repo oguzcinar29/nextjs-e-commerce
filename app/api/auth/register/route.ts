@@ -25,9 +25,8 @@ export async function POST(request: NextRequest) {
         { status: 409 }
       );
     }
-    console.log("hey");
+
     const encryptPass = await bcrypt.hash(password, saltRounds);
-    console.log(encryptPass);
 
     await Users.create({ name: name, email: email, password: encryptPass });
 

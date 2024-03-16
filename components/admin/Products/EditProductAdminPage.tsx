@@ -22,20 +22,27 @@ import {
   productContextType,
 } from "@/components/ProductsContext/ProductsContext";
 import { PlusCircle } from "lucide-react";
-
-import { toast } from "sonner";
 import DeleteCategoryAdmin from "./DeleteCategoryAdmin";
+import { toast } from "sonner";
 
-export default function AddNewProductAdmin() {
-  const { setProducts, categories, setCategories } =
+export default function AddNewProductAdmin(props: { id: string }) {
+  const { products, setProducts, categories, setCategories } =
     useContext<productContextType>(ProductContext);
-  const [image, setImage] = useState<string>("");
-  const [img, setImg] = useState<File | string>("");
 
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [category, setCategory] = useState<string>("");
-  const [price, setPrice] = useState<string>("");
+  const findProduct = products?.find((item: any) => item._id === props.id);
+  const [newCategory, setNewCategory] = useState<string>("");
+
+  const [image, setImage] = useState<string>(findProduct?.image || "");
+  const [img, setImg] = useState<File | string>(findProduct?.image || "");
+
+  const [title, setTitle] = useState<string>(findProduct?.title || "");
+  const [description, setDescription] = useState<string>(
+    findProduct?.description || ""
+  );
+  const [category, setCategory] = useState<string>(findProduct?.category || "");
+  const [price, setPrice] = useState<string>(
+    findProduct?.price.toString() || ""
+  );
 
   const onImageChange = (event: any) => {
     if (event.target.files && event.target.files[0]) {
@@ -48,8 +55,6 @@ export default function AddNewProductAdmin() {
 
   const [err, setError] = useState<string>("");
 
-  const [isCategoryClicked, setCategoryClicked] = useState<boolean>(false);
-
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const data = new FormData();
@@ -61,14 +66,13 @@ export default function AddNewProductAdmin() {
     data.append("price", price.toString());
 
     try {
-      const res = await fetch(`${siteURL}/api/products`, {
-        method: "POST",
+      const res = await fetch(`${siteURL}/api/products/${props.id}`, {
+        method: "PUT",
         body: data,
       });
       if (!res.ok) {
         const data = await res.json();
-
-        setError(data.message && data.message);
+        setError(data.message);
       } else {
         const data = await res.json();
         setProducts(data.products);
@@ -79,9 +83,8 @@ export default function AddNewProductAdmin() {
       console.log(err);
     }
   };
-
+  const [isCategoryClicked, setCategoryClicked] = useState<boolean>(false);
   const addCategory = async (e: any) => {
-    console.log(newCategory);
     setError("");
 
     setCategoryClicked(false);
@@ -96,7 +99,6 @@ export default function AddNewProductAdmin() {
         const data = await res.json();
         setError(data?.message);
       } else {
-        console.log("Success");
         toast("Category added", {
           action: {
             label: "Ok",
@@ -111,8 +113,6 @@ export default function AddNewProductAdmin() {
       console.log(err);
     }
   };
-
-  const [newCategory, setNewCategory] = useState<string>("");
 
   return (
     <div className="flex flex-col gap-5">
@@ -166,9 +166,13 @@ export default function AddNewProductAdmin() {
           <div className="flex flex-col gap-2">
             <div>
               <Label>Category</Label>
-              <Select onValueChange={(e) => setCategory(e)}>
+              <Select
+                defaultValue={findProduct?.category}
+                onValueChange={(e) => setCategory(e)}
+              >
                 <SelectTrigger className="w-full text-black ">
                   <SelectValue
+                    defaultValue={findProduct?.category}
                     className="text-black"
                     placeholder="Select a category"
                   />

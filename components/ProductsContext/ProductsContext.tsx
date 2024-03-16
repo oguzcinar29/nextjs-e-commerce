@@ -40,6 +40,8 @@ export type productContextType = {
   setCard: React.Dispatch<React.SetStateAction<Product[]>>;
   categories: string[];
   pickCategory: string;
+  setCategories: React.Dispatch<React.SetStateAction<string[]>>;
+
   setPickCategory: React.Dispatch<React.SetStateAction<string>>;
   productsLoading: boolean;
   setProductsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -57,6 +59,7 @@ export const productContextDefaultValue: productContextType = {
   setUsers: () => {},
   pickCategory: "",
   setPickCategory: () => {},
+  setCategories: () => {},
   productsLoading: false,
   setProductsLoading: () => {},
 };
@@ -84,12 +87,26 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     getData();
   }, []);
 
-  const categoryCount = products?.map((item: Product) => {
-    return item.category;
-  });
-  const categories = categoryCount?.filter(function (item: any, pos: any) {
-    return categoryCount.indexOf(item) == pos;
-  });
+  const [categories, setCategories] = useState<string[]>([]);
+
+  const getCategories = async () => {
+    try {
+      const res = await fetch(`${siteURL}/api/categories`, {
+        cache: "no-cache",
+      });
+      if (!res.ok) {
+        throw new Error("Failed to fetch categories data");
+      } else {
+        const data = await res.json();
+        setCategories(data.categories);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
 
   const [pickCategory, setPickCategory] = useState<string | null>("all");
 
@@ -132,8 +149,6 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   useEffect(() => {
-    console.log("users");
-
     getUsers();
   }, []);
 
@@ -144,6 +159,7 @@ const ProductProvider: React.FC<{ children: React.ReactNode }> = ({
     setProducts,
     categories,
     pickCategory,
+    setCategories,
     setPickCategory,
     productsLoading,
     setProductsLoading,

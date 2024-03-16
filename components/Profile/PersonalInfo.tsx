@@ -11,6 +11,7 @@ import {
   productContextType,
 } from "../ProductsContext/ProductsContext";
 import { useRouter } from "next/navigation";
+import bcrypt from "bcrypt";
 
 export default function PersonalInfo() {
   const { data: session } = useSession();
@@ -20,6 +21,8 @@ export default function PersonalInfo() {
   const [email, setEmail] = useState<string>("");
 
   const [name, setName] = useState<string>("");
+
+  const [password, setPassword] = useState<string>("");
 
   useEffect(() => {
     const getUsers = async () => {
@@ -62,7 +65,7 @@ export default function PersonalInfo() {
         {
           method: "PUT",
           headers: { "Content-type": "application/json" },
-          body: JSON.stringify({ name, email }),
+          body: JSON.stringify({ name, email, password }),
         }
       );
       if (!res.ok) {
@@ -87,17 +90,25 @@ export default function PersonalInfo() {
           <Input
             value={email || ""}
             onChange={(e) => setEmail(e.target.value)}
+            type="text"
           />
         </div>
         <div>
           <Label>Name *</Label>
-          <Input value={name || ""} onChange={(e) => setName(e.target.value)} />
+          <Input
+            value={name || ""}
+            type="text"
+            onChange={(e) => setName(e.target.value)}
+          />
         </div>
-        <span>
-          Change your account details below, or{" "}
-          <span className="underline cursor-pointer">click here</span> to change
-          your password.
-        </span>
+        <div>
+          <Label>Password *</Label>
+          <Input
+            value={password || ""}
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
         <Button className="w-40 " type="submit">
           Update Account
         </Button>

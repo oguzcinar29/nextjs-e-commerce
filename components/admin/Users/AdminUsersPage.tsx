@@ -36,8 +36,6 @@ export default function AdminUsersPage() {
   };
 
   useEffect(() => {
-    console.log("users");
-
     getUsers();
   }, []);
 

@@ -3,10 +3,7 @@ import Orders from "@/models/orders";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest, { params }: any) {
-  console.log("hey123");
-
   const { id } = params;
-  console.log(id);
 
   try {
     await connectMongoDB();

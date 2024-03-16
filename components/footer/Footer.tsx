@@ -11,7 +11,7 @@ import logo from "@/public/logo-white.svg";
 export default function Footer() {
   return (
     <div className="pt-32">
-      <div className="w-3/4 m-auto flex justify-between gap-5 pb-16 flex-wrap ">
+      <div className="w-3/4 m-auto flex justify-between gap-5 pb-16 flex-wrap 650max:gap-10 ">
         <div className="flex flex-col gap-2">
           <Package size={30} />
           <b className="text-lg pt-3">Free Shipping</b>

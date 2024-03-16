@@ -20,7 +20,7 @@ export default function Categories() {
       </div>
       <div className="flex gap-10 flex-wrap justify-between 1000max:justify-center 1000max:items-center">
         {categories?.map((item: any, i) => {
-          return <Category key={i} id={i} item={item} />;
+          return <Category key={i} id={i} item={item.name} />;
         })}
       </div>
     </div>

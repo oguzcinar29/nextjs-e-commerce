@@ -19,21 +19,16 @@ export async function POST(request: NextRequest) {
     );
 
     if (!findOrder) {
-      console.log("created");
-
       await Orders.create({
         productsArr: findCard.productsArr,
         userId: findCard.userId,
       });
-      console.log(findCard._id);
     } else {
       const orderArr = findOrder.productsArr;
 
       card.map((item: any) => orderArr.push(item));
 
       await Orders.findByIdAndUpdate(findOrder._id, { productsArr: orderArr });
-
-      console.log("order updated");
     }
     await Cards.findByIdAndUpdate(findCard._id, { productsArr: [] });
 

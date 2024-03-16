@@ -1,18 +1,29 @@
 import { connectMongoDB } from "@/lib/mongodb";
 import Users from "@/models/users";
 import { NextRequest, NextResponse } from "next/server";
+import bcrypt from "bcrypt";
 export const dynamic = "force-dynamic";
 export async function PUT(request: NextRequest, { params }: any) {
   const { id } = params;
-  console.log(id);
 
-  const { email, name } = await request.json();
-  console.log(email, name);
+  const { email, name, password } = await request.json();
 
   try {
     await connectMongoDB();
-    await Users.findByIdAndUpdate(id, { name, email });
-    return NextResponse.json({ message: "succsess" }, { status: 200 });
+
+    if (password) {
+      const encrpytPass = await bcrypt.hash(password, 10);
+      await Users.findByIdAndUpdate(id, { name, email, password: encrpytPass });
+    } else {
+      const findUser = await Users.findById(id);
+      await Users.findByIdAndUpdate(id, {
+        name,
+        email,
+        password: findUser.password,
+      });
+    }
+    const users = await Users.find();
+    return NextResponse.json({ users }, { status: 200 });
   } catch (err) {
     console.log(err);
     return NextResponse.json({ message: "err" }, { status: 500 });
@@ -21,7 +32,6 @@ export async function PUT(request: NextRequest, { params }: any) {
 
 export async function DELETE(request: NextRequest, { params }: any) {
   const { id } = params;
-  console.log(id);
 
   try {
     await connectMongoDB();

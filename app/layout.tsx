@@ -22,8 +22,6 @@ export default function RootLayout({
 }>) {
   const pathname = usePathname();
 
-  console.log(pathname.startsWith("/admin"));
-
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -60,6 +58,7 @@ export default function RootLayout({
                 <div className="flex">
                   <LeftMenu />
                   <div className="w-3/4 p-6  ">{children}</div>
+                  <Toaster position="top-center" />
                 </div>
               </ProductProvider>
             </div>

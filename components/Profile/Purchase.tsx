@@ -12,7 +12,6 @@ export default function Purchase() {
   const { data: session } = useSession();
 
   const userId = session?.user?.id;
-  console.log(userId);
 
   const getOrders = async () => {
     try {
@@ -22,13 +21,8 @@ export default function Purchase() {
       if (!res.ok) {
         throw new Error("Failed to fetch orders data");
       } else {
-        console.log("hey");
-
         const data = await res.json();
-        console.log(data);
         setOrders(data.ordersArr);
-
-        console.log("succes log");
       }
     } catch (err) {
       console.log(err);
@@ -39,17 +33,18 @@ export default function Purchase() {
     getOrders();
   }, [session]);
 
-  console.log(orders);
-
   return (
     <div className="w-2/3 1000max:w-full">
       <div className="flex flex-col gap-10">
         <b className="font-black text-lg">Purchased Products</b>
-        <div className="flex flex-col gap-10 overflow-y-scroll h-64">
-          {orders?.map((item: any, i) => {
-            return <PurchaseItem {...item} key={i} />;
-          })}
-        </div>
+        {orders && (
+          <div className="flex flex-col gap-10 overflow-y-scroll h-64">
+            {orders?.map((item: any, i) => {
+              return <PurchaseItem {...item} key={i} />;
+            })}
+          </div>
+        )}
+        {!orders && <div>No orders yet...</div>}
       </div>
     </div>
   );

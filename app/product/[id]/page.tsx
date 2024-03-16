@@ -19,8 +19,6 @@ export default function SingleProduct({ params }: any) {
 
   const { data: session } = useSession();
 
-  console.log(cardId);
-
   async function handleClick() {
     toast("Item has been added to card", {
       action: {
@@ -49,8 +47,6 @@ export default function SingleProduct({ params }: any) {
       );
 
       if (findItem) {
-        console.log("find item");
-
         const newObj2 = {
           ...findItem,
           count: findItem.count + 1,
@@ -58,7 +54,7 @@ export default function SingleProduct({ params }: any) {
         const findIndex = oldItems.findIndex(
           (item: any) => item._id === findItem._id
         );
-        console.log(findIndex);
+
         oldItems[findIndex].count += 1;
         localStorage.setItem("products", JSON.stringify(oldItems));
       } else {
@@ -67,7 +63,6 @@ export default function SingleProduct({ params }: any) {
       }
       setCard(oldItems as any);
     }
-    console.log(cardId);
 
     if (session?.user) {
       const res = await fetch(`${siteURL}/api/cards/${cardId}`, {

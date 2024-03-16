@@ -32,7 +32,7 @@ export default function ThreeBox() {
           <LucideUsers />
         </span>
         <div className="flex flex-col gap-5">
-          <span>Total Users</span>
+          <span>Revenue</span>
           <b className="text-2xl">10.324</b>
           <span>
             <span className="text-green-500">18%</span> more than previous week

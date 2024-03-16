@@ -11,8 +11,8 @@ import {
   productContextType,
 } from "../ProductsContext/ProductsContext";
 
-export default function Category(props: { item: string; id: number }) {
-  const photos = [jew, man, electronic, woman];
+export default function Category(props: { item: any; id: number }) {
+  const photos = [man, woman, jew, electronic];
 
   const { pickCategory, setPickCategory } =
     useContext<productContextType>(ProductContext);

@@ -24,16 +24,17 @@ export default function CategoriesButtons() {
           </Label>
         </div>
         <div className="flex  flex-col  gap-3">
-          {categories?.map((item: string, id: any) => {
+          {categories?.map((item: any, id: any) => {
             return (
               <div key={id} className="flex gap-3 items-center text-2xl">
                 <RadioGroupItem
-                  onClick={() => setPickCategory(item)}
-                  value={item}
+                  onClick={() => setPickCategory(item?.name)}
+                  value={item?.name}
                   id={id}
                 />
                 <Label className="text-base font-normal" htmlFor={id}>
-                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                  {item &&
+                    item?.name?.charAt(0).toUpperCase() + item?.name?.slice(1)}
                 </Label>
               </div>
             );

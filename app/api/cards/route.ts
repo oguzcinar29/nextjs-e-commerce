@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       await Cards.create({ productsArr: card, userId });
       const newArr = card;
       const findCard2 = await Cards.find();
-      console.log(findCard2);
+
       cardId = findCard2[findCard2.length - 1]._id.toString();
 
       return NextResponse.json({ newArr, cardId }, { status: 200 });

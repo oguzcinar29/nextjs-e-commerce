@@ -68,7 +68,6 @@ export async function DELETE(request: NextRequest, { params }: any) {
   const { id } = params;
 
   const itemId = await request.json();
-  console.log(itemId);
 
   try {
     await connectMongoDB();
@@ -79,7 +78,7 @@ export async function DELETE(request: NextRequest, { params }: any) {
     const newArr = cardsArr.filter(
       (item: any) => item._id.toString() !== itemId.toString()
     );
-    console.log(newArr);
+
     await Cards.findByIdAndUpdate(id, { productsArr: newArr });
     return NextResponse.json({ message: "success" }, { status: 200 });
   } catch (err) {

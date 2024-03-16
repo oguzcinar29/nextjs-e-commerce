@@ -20,10 +20,7 @@ export default function Orders() {
         throw new Error("Failed to fetch orders data");
       } else {
         const data = await res.json();
-        console.log(data);
         setOrders(data.ordersArr);
-
-        console.log("succes log");
       }
     } catch (err) {
       console.log(err);
@@ -39,19 +36,21 @@ export default function Orders() {
     <div className="w-2/3 1000max:w-full ">
       <div className="flex flex-col gap-10">
         <b className="font-black text-lg">My Orders</b>
-        <div className="flex justify-between items-center">
-          <div className="flex flex-col gap-3">
-            <b>Order 1243KOPRKOWE123</b>
-            <span>Total: ${orders && orders[orders?.length - 1]?.price}</span>
-            <span>Ordered On: 11/12/2024</span>
+        {orders && (
+          <div className="flex justify-between items-center">
+            <div className="flex flex-col gap-3">
+              <b>Order 1243KOPRKOWE123</b>
+              <span>Total: ${orders && orders[orders?.length - 1]?.price}</span>
+              <span>Ordered On: 11/12/2024</span>
+            </div>
+            <span
+              className="cursor-pointer"
+              onClick={() => setIsClicked(!isClicked)}
+            >
+              View Order
+            </span>
           </div>
-          <span
-            className="cursor-pointer"
-            onClick={() => setIsClicked(!isClicked)}
-          >
-            View Order
-          </span>
-        </div>
+        )}
         {isClicked && (
           <div className="flex flex-col gap-10 ">
             <div className="flex items-center gap-5">
@@ -75,6 +74,7 @@ export default function Orders() {
             </div>
           </div>
         )}
+        {!orders && <h1>No orders yet...</h1>}
       </div>
     </div>
   );

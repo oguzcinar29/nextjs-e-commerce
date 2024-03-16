@@ -93,7 +93,7 @@ export default function LeftMenu() {
                 <span>Revenue</span>
               </Button>
             </Link>
-            <Link href="/admin/users">
+            <Link href="/admin">
               <Button
                 className="flex  items-center gap-2 w-full justify-start"
                 variant={"ghost"}
@@ -104,7 +104,7 @@ export default function LeftMenu() {
                 <span>Reports</span>
               </Button>
             </Link>
-            <Link href="/admin/products">
+            <Link href="/admin">
               <Button
                 className="flex  items-center gap-2 w-full justify-start"
                 variant={"ghost"}

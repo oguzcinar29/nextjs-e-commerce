@@ -11,10 +11,6 @@ export default function AdminPage() {
         </div>
         <div>
           <UserInfo />
-          <div>
-            <div></div>
-            <div></div>
-          </div>
         </div>
       </div>
     </div>

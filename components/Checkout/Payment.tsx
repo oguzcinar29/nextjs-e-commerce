@@ -27,7 +27,6 @@ export default function Payment() {
       if (!res.ok) {
         throw new Error("Failed to send card data");
       } else {
-        console.log("success log");
         window.localStorage.removeItem("products");
         setCard([]);
         router.push("/thank-you");

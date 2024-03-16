@@ -36,8 +36,6 @@ export default function AdminUsersPage() {
   };
 
   useEffect(() => {
-    console.log("users");
-
     getProducts();
   }, []);
 
@@ -61,8 +59,6 @@ export default function AdminUsersPage() {
   };
 
   const [searchText, setSearchText] = useState<string>("");
-
-  console.log(products);
 
   return (
     <div>

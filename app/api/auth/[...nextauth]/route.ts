@@ -23,10 +23,10 @@ const handler = NextAuth({
       async authorize(credentials, req) {
         await connectMongoDB();
         const email = credentials?.email;
-        console.log(email);
+
         const password = credentials?.password || "";
         const user = await Users.find({ email });
-        console.log(user);
+
         if (user.length === 0) {
           return null;
         } else {
@@ -35,8 +35,6 @@ const handler = NextAuth({
             user[0].password
           );
           if (isCorrectPass) {
-            console.log("succes");
-
             return {
               id: user[0]._id,
               email: user[0].email,

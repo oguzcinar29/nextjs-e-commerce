@@ -12,9 +12,12 @@ import {
   ProductContext,
   productContextType,
 } from "../ProductsContext/ProductsContext";
+import Link from "next/link";
+import { siteURL } from "@/URL";
 
 export function CarouselDemo() {
-  const { products } = React.useContext<productContextType>(ProductContext);
+  const { products, setPickCategory } =
+    React.useContext<productContextType>(ProductContext);
   return (
     <Carousel className="w-full max-w-xs">
       <CarouselContent>
@@ -23,10 +26,14 @@ export function CarouselDemo() {
             <div className="p-1">
               <Card>
                 <CardContent className="flex aspect-square items-center justify-center p-6">
-                  <span className="text-xl text-start flex flex-col gap-3 font-semibold">
+                  <Link
+                    onClick={() => setPickCategory(products[index].category)}
+                    href={`${siteURL}/product/${products[index]._id}`}
+                    className="text-xl text-start flex flex-col gap-3 font-semibold"
+                  >
                     <div className="flex mb-3 justify-center items-center">
                       <img
-                        className="w-32 h-32 "
+                        className="w-52 h-52 "
                         src={products[index]?.image}
                         alt={products[index]?.title}
                       />
@@ -38,7 +45,7 @@ export function CarouselDemo() {
                       {products[index]?.description.slice(0, 20)}...
                     </span>
                     <span>${products[index]?.price}</span>
-                  </span>
+                  </Link>
                 </CardContent>
               </Card>
             </div>
