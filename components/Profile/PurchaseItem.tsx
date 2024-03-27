@@ -14,7 +14,7 @@ export default function PurchaseItem(props: Card) {
         <div className="flex flex-col gap-1">
           <b>{props.title}</b>
           <span>${props.count * props.price}</span>
-          <span>Purchased On: 11/15/2024</span>
+          <span>Purchased On: 11/15/2023</span>
         </div>
       </div>
       <hr />
