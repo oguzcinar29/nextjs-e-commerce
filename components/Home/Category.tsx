@@ -19,9 +19,9 @@ export default function Category(props: { item: any; id: number }) {
 
   return (
     <div className="flex flex-col gap-3 justify-between w-80 h-80 rounded-md bg-gray-100 pb-3 text-center">
-      <Image
+      <img
         className="object-cover  bg-transparent"
-        src={photos[props.id]}
+        src={photos[props.id].src}
         alt="image"
       />
       <Link
