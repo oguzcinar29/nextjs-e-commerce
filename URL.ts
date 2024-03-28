@@ -1,1 +1,1 @@
-export const siteURL = "https://techheaven-ecommerce.netlify.app";
+export const siteURL = "https://nextjs-e-commerce-rosy.vercel.app";
